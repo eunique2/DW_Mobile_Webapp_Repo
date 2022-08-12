@@ -59,7 +59,7 @@
                 return promise;
             },
             //postMessage Promise 에 의한 리턴함수 실행 
-            retrunedMessage : function(name,data,err){
+            returnedMessage : function(name,data,err){
                 if(err){
                     promises[name].reject(data);
                 }

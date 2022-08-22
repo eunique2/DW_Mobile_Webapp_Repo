@@ -68,7 +68,34 @@
                 }  
                 delete promises[name];      
             }
-        }  
+        },
+        //PUSH 터치이벤트시 호출
+        /**
+         * 푸시리시버 JS 영역으로 Native단에서 푸시터치이벤트 발생시 onRecvNotification을 호출함 
+         * 화면단의 공통영역에 onDWPushDeepLinkProc 함수를 선언해주고 사전 협의된 규칙에 따라 로직 전개 
+         * @param {*} data : 푸시정보 페이로드 
+         */
+        onRecvNotification = function(data) {
+            console.log("push data", data);
+            var dataExt = "";
+            if (data.EXT) {
+                dataExt = data.EXT;
+            } else {
+                //iphone 의 경우 mps로 탐.
+                if (data.payload.EXT) {
+                    dataExt = data.payload.EXT;
+                } else {
+                    dataExt = data.payload.mps.ext;
+                }
+            }
+            var extArr = [];
+            if(dataExt){
+                extArr = dataExt.split("|");
+                if(typeof(onPushDeepLinkProc)=="function"){
+                    onDWPushDeepLinkProc(extArr);
+                }                    
+            }                               
+        }      
     }
          
 })(window);

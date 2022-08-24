@@ -33,14 +33,24 @@
                     function(res){
                         console.log(res);
                         if(typeof(_cb)=="function"){
-                            _cb(JSON.parse(res));
+                            try{
+                                _cb(JSON.parse(res));
+                            }
+                            catch(e){
+                                _cb(res);
+                            }                            
                         }                        
                     },
                     //reject
                     function(err){
                         console.log(err);
                         if(typeof(_cb)=="function"){
-                            _cb(JSON.parse(err));
+                            try{
+                                _cb(JSON.parse(err));
+                            }
+                            catch(e){
+                                _cb(err);
+                            }
                         }                       
                     }
                 )

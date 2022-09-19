@@ -19,14 +19,14 @@
 
  */
 (function(window, undefined) {
-    promises = {};
+    window.promises = {};
     //iOS 에서 실행한 동화웹뷰
     if (navigator.userAgent.indexOf("DWWV iOS") != -1){
         window.DWNAPI = webkit.messageHandlers.DWNAPI;
     }
     //동화웹뷰상에서 실행 
     if (navigator.userAgent.indexOf("DWWV") != -1){
-        DWAPI = {
+        window.DWAPI = {
             post : function(arr,_cb) {
                 DWAPI.postMessage(arr,_cb).then(
                     //resolve
@@ -58,7 +58,7 @@
             //post 함수에서 호출(직접적으로 되도록 호출하지 말것.)
             postMessage : function(arr){
                 var promise = new Promise(function(resolve, reject) {
-                    this.promises[arr[0]] = {resolve,reject};
+                    promises[arr[0]] = {resolve,reject};
                     try{
                         window.DWNAPI.postMessage(arr);
                     }
@@ -85,7 +85,7 @@
          * 화면단의 공통영역에 onDWPushDeepLinkProc 함수를 선언해주고 사전 협의된 규칙에 따라 로직 전개 
          * @param {*} data : 푸시정보 페이로드 
          */
-        onRecvNotification = function(data) {
+        window.onRecvNotification = function(data) {
             console.log("push data", data);
             var dataExt = "";
             if (data.EXT) {

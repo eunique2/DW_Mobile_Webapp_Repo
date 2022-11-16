@@ -59,7 +59,7 @@
             postMessage : function(arr){
                 var promise = new Promise(function(resolve, reject) {
                     var idx = Object.keys(window.promises).filter(function(a){return a==arr[0]}).length+1;
-                    arr.push(idx);
+                    arr.push(String(idx));
                     promises[arr[0]+idx] = {resolve,reject};
                     try{
                         window.DWNAPI.postMessage(arr);

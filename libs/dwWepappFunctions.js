@@ -58,7 +58,9 @@
             //post 함수에서 호출(직접적으로 되도록 호출하지 말것.)
             postMessage : function(arr){
                 var promise = new Promise(function(resolve, reject) {
-                    promises[arr[0]] = {resolve,reject};
+                    var idx = Object.keys(window.promises).filter(function(a){return a==arr[0]}).length+1;
+                    arr.push(idx);
+                    promises[arr[0]+idx] = {resolve,reject};
                     try{
                         window.DWNAPI.postMessage(arr);
                     }
